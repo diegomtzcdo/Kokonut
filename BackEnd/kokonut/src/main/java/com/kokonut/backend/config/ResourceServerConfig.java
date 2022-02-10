@@ -34,12 +34,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		            "/**/*.js")
 		            .permitAll()
 			.anyRequest().authenticated()
-			.and().cors().configurationSource(corsConfigurationSource()); 
+			.and().cors().configurationSource(corsConfigurationSource());
 	}
 	
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration config = new CorsConfiguration();
+		//Permiso de Prueba
 		config.setAllowedOrigins(Arrays.asList("*"));
 		config.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "OPTIONS"));
 		config.setAllowCredentials(true);
