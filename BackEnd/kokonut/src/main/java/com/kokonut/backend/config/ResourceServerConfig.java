@@ -40,7 +40,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration config = new CorsConfiguration();
-		//Permiso de Prueba
+		//Permiso Cors de Prueba
 		config.setAllowedOrigins(Arrays.asList("*"));
 		config.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "OPTIONS"));
 		config.setAllowCredentials(true);
