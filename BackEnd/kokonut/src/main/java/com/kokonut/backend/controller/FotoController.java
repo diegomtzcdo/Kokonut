@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class FotoController {
 	
 	@PostMapping("/subir")
-	@Secured("ROLE_USUARIO")
 	public RequestEntity<?> subirFoto(@RequestParam("foto") MultipartFile foto) {
 		
 		if(!foto.isEmpty()) {

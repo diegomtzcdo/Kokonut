@@ -37,11 +37,11 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 		// Permite a la gente ingresar con Correo
         Usuario user = userRepository.findByEmail(userEmail)
         		.orElseThrow(() -> 
-        			new UsernameNotFoundException("Usuario no encontrado con correo o nombre de Usuario : " + userEmail));
+        			new UsernameNotFoundException("Usuario no encontrado con correo : " + userEmail));
         if(user.getEnabled()) throw new AppException("Usuario no disponible");
-        List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
-        new SimpleGrantedAuthority(role.getName())
-        		).collect(Collectors.toList());
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+        		.map(role -> new SimpleGrantedAuthority(role.getName()))
+        		.collect(Collectors.toList());
 		//return new User(user.getUsername(), user.getPassword(), enable, accountNonExpired, credencialNonExpired, accountNonLocked, authorities);
 		return new User(user.getUsername(), user.getPassword(), user.getEnabled(), true, true, true, authorities);
 	}
