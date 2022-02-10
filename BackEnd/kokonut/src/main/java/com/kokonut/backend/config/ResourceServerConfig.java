@@ -31,9 +31,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		            "/**/*.jpg",
 		            "/**/*.html",
 		            "/**/*.css",
-		            "/**/*.js")
+		            "/**/*.js",
+		            "/swagger-ui.html")
 		            .permitAll()
 		    .antMatchers(HttpMethod.POST, "/api/auth/registrarse").permitAll()
+		    .antMatchers(HttpMethod.POST, "/api/auth/registrarMod").permitAll()
 		    .antMatchers(HttpMethod.GET, "/api/auth/confirm").permitAll()
 		    .antMatchers("/test/*").permitAll()
 			.anyRequest().authenticated()

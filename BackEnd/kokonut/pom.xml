@@ -134,13 +134,28 @@
 			<artifactId>javaxt-core</artifactId>
 			<version>1.7.8</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>com.groupdocs</groupId>
-		    <artifactId>groupdocs-metadata</artifactId>
-		    <version>18.2</version>
-		    <classifier>javadoc</classifier>
+			<groupId>com.groupdocs</groupId>
+			<artifactId>groupdocs-metadata</artifactId>
+			<version>18.2</version>
+			<classifier>javadoc</classifier>
 		</dependency>
+
+		<!-- Swagger -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+
 
 	</dependencies>
 
@@ -164,5 +179,5 @@
 			<url>http://repository.groupdocs.com/repo/</url>
 		</repository>
 	</repositories>
-	
+
 </project>
