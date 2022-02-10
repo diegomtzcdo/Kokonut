@@ -1,6 +1,6 @@
 use kokonutPrueba
 go
-CREATE OR ALTER PROCEDURE CreateSPUser (@avatar    VARCHAR(255) = '',
+CREATE OR ALTER PROCEDURE CreateSPMod (@avatar    VARCHAR(255) = '',
 							  @email     VARCHAR(255),
                               @enabled        bit,
                               @pass          VARCHAR(255),
@@ -27,6 +27,6 @@ INSERT INTO kokonutPrueba.dbo.usuarios
 		   ,@name
 		   ,@code);
 INSERT INTO kokonutPrueba.dbo.usuarios_roles ([usuario_id_usuario], [roles_id_rol]) 
-	SELECT [id_usuario], 1 FROM kokonutPrueba.dbo.usuarios WHERE [email] = @email;
+	SELECT [id_usuario], 2 FROM kokonutPrueba.dbo.usuarios where [email] = @email;
 
 END 

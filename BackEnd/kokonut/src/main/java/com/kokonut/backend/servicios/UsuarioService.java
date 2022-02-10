@@ -17,11 +17,13 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kokonut.backend.exception.AppException;
 import com.kokonut.backend.modelos.Usuario;
+import com.kokonut.backend.payload.UsuarioPayload;
 import com.kokonut.backend.repositorios.RolRepository;
 import com.kokonut.backend.repositorios.UsuarioRepository;
 import com.kokonut.backend.servicios.dao.IUsuarioService;
@@ -37,6 +39,9 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -45,21 +50,20 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
         Usuario user = userRepository.findByEmail(userEmail)
         		.orElseThrow(() -> 
         			new UsernameNotFoundException("Usuario no encontrado con correo : " + userEmail));
-        if(user.getEnabled()) throw new AppException("Usuario no disponible");
+        if(!user.getEnabled()) throw new AppException("Usuario no disponible, favor de confirmar el correo");
         List<GrantedAuthority> authorities = user.getRoles().stream()
         		.map(role -> new SimpleGrantedAuthority(role.getName()))
         		.collect(Collectors.toList());
 		//return new User(user.getUsername(), user.getPassword(), enable, accountNonExpired, credencialNonExpired, accountNonLocked, authorities);
-		return new User(user.getUsername(), user.getPassword(), user.getEnabled(), true, true, true, authorities);
+		return new User(user.getEmail(), user.getPassword(), user.getEnabled(), true, true, true, authorities);
 	}
 
 	@Override
-	public Usuario create(Usuario user) {
+	public UsuarioPayload create(UsuarioPayload user) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		user.setEnabled(false);
 		String code = UUID.randomUUID().toString().substring(0, 16).replace('-', 't');
-		user.setCodigo(code);
-		userRepository.createUserSP(user.getAvatar(), user.getEmail(), false, user.getPassword(), user.getUsername(), code);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		userRepository.createUserSP(user.getAvatar(), user.getEmail(), false, user.getPassword(), user.getUsername(), code, user.getFullName());
 		map.put("url", "http://localhost:8080/kokonut/v1/api/auth/confirm?code=" + code);
 		try {
 			emailService.templateMessageParam(user.getEmail(), "Algo iria aqui", "Correo de Confirmación", "mailconfirm", map);
@@ -72,6 +76,29 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 
 	public void confirmEmail(String code) {
 		userRepository.confirmEmail(code);
+	}
+
+	@Override
+	public UsuarioPayload createMod(@Valid UsuarioPayload user) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String code = UUID.randomUUID().toString().substring(0, 16).replace('-', 't');
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		userRepository.createModSP(user.getAvatar(), user.getEmail(), false, user.getPassword(), user.getUsername(), code, user.getFullName());
+		map.put("url", "http://localhost:8080/kokonut/v1/api/auth/confirm?code=" + code);
+		try {
+			emailService.templateMessageParam(user.getEmail(), "Algo iria aqui", "Correo de Confirmación", "mailconfirm", map);
+		} catch (MessagingException e) {
+			
+			e.printStackTrace();
+		}
+		return user;
+	}
+
+	@Override
+	public UsuarioPayload actualizarUsuario(UsuarioPayload newUsr, String OldUsr) {
+		newUsr.setPassword(passwordEncoder.encode(newUsr.getPassword()));
+		userRepository.updateUser(newUsr.getAvatar(), newUsr.getEmail(), newUsr.getPassword(), newUsr.getUsername(), newUsr.getFullName(), OldUsr);
+		return newUsr;
 	}
 
 	/*@Override

@@ -43,6 +43,9 @@ public class Usuario implements Serializable {
     @NotEmpty(message = "*Porfavor ingresa un correo")
     private String email;
 	
+	@Column(name = "full_name")
+    private String fullName;
+	
 	@Column(name = "username")
     private String username;
 	
