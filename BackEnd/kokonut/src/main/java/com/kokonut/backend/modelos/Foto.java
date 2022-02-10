@@ -37,5 +37,8 @@ public class Foto implements Serializable {
 	
 	@Column(name = "longitude")
 	private String Longitude;
+	
+	@Column(name = "enabled")
+	private Boolean enabled;
 
 }
