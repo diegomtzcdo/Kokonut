@@ -9,5 +9,7 @@ public interface IUsuarioService {
 	public UsuarioPayload createMod(UsuarioPayload s);
 	
 	public UsuarioPayload actualizarUsuario(UsuarioPayload newUsr, String OldUsr);
+	
+	public String borrarUsuario(String email);
 
 }

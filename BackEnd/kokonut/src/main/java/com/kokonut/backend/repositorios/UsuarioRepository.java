@@ -38,4 +38,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     void updateUser(@Param("avatar") String avatar, @Param("email") String email, @Param("pass")String pass, @Param("user")String user, 
     		@Param("name") String name, @Param("oldMail") String oldMail);
     
+    @Procedure("DeleteUserSP")
+    void deleteUser(@Param("oldMail") String oldMail);
 }

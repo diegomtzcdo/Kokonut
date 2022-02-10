@@ -101,6 +101,12 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 		return newUsr;
 	}
 
+	@Override
+	public String borrarUsuario(String email) {
+		userRepository.deleteUser(email);
+		return "Usuario Borrado Exitosamente!";
+	}
+
 	/*@Override
 	@Transactional(value="seguridadTransactionManager", readOnly = true)
 	public Usuario findByUsername(String username) {

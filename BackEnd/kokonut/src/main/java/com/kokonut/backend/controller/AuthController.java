@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -49,6 +50,12 @@ public class AuthController {
 	@ResponseBody
 	public UsuarioPayload actualizarUsuario(@Valid @RequestBody UsuarioPayload newUser, Principal principal) {
 		return userService.actualizarUsuario(newUser, principal.getName());
+	}
+	
+	@DeleteMapping("/delete")
+	@ResponseBody
+	public String borrarUsuario(Principal principal) {
+		return userService.borrarUsuario(principal.getName());
 	}
 	
 
