@@ -1,6 +1,8 @@
 package com.kokonut.backend.repositorios;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.kokonut.backend.modelos.Usuario;
@@ -20,4 +22,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Boolean existsByUsername(String username);
 
     Boolean existsByEmail(String email);
+    
+    @Procedure("CreateSPUser")
+    void createUserSP(@Param("avatar") String avatar, @Param("email") String email, @Param("enabled") Boolean enabled, @Param("pass")String pass, 
+    		@Param("user")String user, @Param("code") String codes);
+    
+    @Procedure("ConfirmEmailSP")
+    void confirmEmail(@Param("code") String code);
 }

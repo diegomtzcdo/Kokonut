@@ -1,9 +1,13 @@
 package com.kokonut.backend.servicios;
 
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +30,13 @@ import com.kokonut.backend.servicios.dao.IUsuarioService;
 public class UsuarioService implements UserDetailsService, IUsuarioService {
 
 	@Autowired
-    UsuarioRepository userRepository;
+    private UsuarioRepository userRepository;
 	
 	@Autowired
-	RolRepository roleRepository;
+	private RolRepository roleRepository;
+	
+	@Autowired
+	private EmailService emailService;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -44,6 +51,27 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
         		.collect(Collectors.toList());
 		//return new User(user.getUsername(), user.getPassword(), enable, accountNonExpired, credencialNonExpired, accountNonLocked, authorities);
 		return new User(user.getUsername(), user.getPassword(), user.getEnabled(), true, true, true, authorities);
+	}
+
+	@Override
+	public Usuario create(Usuario user) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		user.setEnabled(false);
+		String code = UUID.randomUUID().toString().substring(0, 16).replace('-', 't');
+		user.setCodigo(code);
+		userRepository.createUserSP(user.getAvatar(), user.getEmail(), false, user.getPassword(), user.getUsername(), code);
+		map.put("url", "http://localhost:8080/kokonut/v1/api/auth/confirm?code=" + code);
+		try {
+			emailService.templateMessageParam(user.getEmail(), "Algo iria aqui", "Correo de Confirmación", "mailconfirm", map);
+		} catch (MessagingException e) {
+			
+			e.printStackTrace();
+		}
+		return user;
+	}
+
+	public void confirmEmail(String code) {
+		userRepository.confirmEmail(code);
 	}
 
 	/*@Override

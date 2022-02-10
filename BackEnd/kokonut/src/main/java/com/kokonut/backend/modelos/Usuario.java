@@ -55,6 +55,9 @@ public class Usuario implements Serializable {
 	@Column(name = "enabled")
 	private Boolean enabled;
 	
+	@Column(name = "codigo")
+	private String codigo;
+	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Rol> roles;
 

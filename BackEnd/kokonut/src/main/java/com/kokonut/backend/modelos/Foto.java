@@ -33,10 +33,10 @@ public class Foto implements Serializable {
 	private String name;
 	
 	@Column(name = "latitude")
-	private String Latitude;
+	private Double Latitude;
 	
 	@Column(name = "longitude")
-	private String Longitude;
+	private Double Longitude;
 	
 	@Column(name = "enabled")
 	private Boolean enabled;
