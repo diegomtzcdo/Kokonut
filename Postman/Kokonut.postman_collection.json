@@ -1,0 +1,414 @@
+{
+	"info": {
+		"_postman_id": "3b2ac9be-c90a-4343-8a0c-8ebf16d7de83",
+		"name": "Kokonut",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Registrar Usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"cdoDiego\",\r\n    \"password\": \"prueba\",\r\n    \"fullName\": \"Carlos Diego Octavio Martinez Macias\",\r\n    \"email\": \"cdodiegomtz@gmail.com\",\r\n    \"avatar\": \"xd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/kokonut/v1/api/auth/registrarse",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"kokonut",
+						"v1",
+						"api",
+						"auth",
+						"registrarse"
+					]
+				},
+				"description": "Registro Nuevo Usuario"
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar Mod",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"cdosbtsc\",\r\n    \"password\": \"pass21\",\r\n    \"fullName\": \"Carlos Diego Octavio Martinez Macias\",\r\n    \"email\": \"cdosbtsc@gmail.com\",\r\n    \"avatar\": \"testin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/kokonut/v1/api/auth/registrarMod",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"kokonut",
+						"v1",
+						"api",
+						"auth",
+						"registrarMod"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logearse (Obtener token)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "k0k0Nut!",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "kokonutApp",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "cdodiegomtz@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "prueba",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/kokonut/v1/oauth/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"kokonut",
+						"v1",
+						"oauth",
+						"token"
+					]
+				},
+				"description": "Obtener jwt de acceso"
+			},
+			"response": []
+		},
+		{
+			"name": "Confirm Email",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/kokonut/v1/api/auth/confirm?code=d7867d48t6e82t4f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"kokonut",
+						"v1",
+						"api",
+						"auth",
+						"confirm"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "d7867d48t6e82t4f"
+						}
+					]
+				},
+				"description": "confirmar correo"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar Usuario",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDQ1NDM0MDMsInVzZXJfbmFtZSI6ImNkb2RpZWdvbXR6QGdtYWlsLmNvbSIsImp0aSI6ImYxYWEyYTliLWNhYTMtNGMyYy05Zjk5LWI1ZWYxMTIyYTgzOSIsImNsaWVudF9pZCI6Imtva29udXRBcHAiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.SVUsyYi6AuwWdjQeQnX2bV7rJLCrWuEGiuK_J4cGonMJV9Tvh009ERD2aBJW4y9XkJ7lJiinGwIvDyVyITF_KSoHNt-UqZXZHCT5nt--YtYVf-viouvPWVQIfZyb7KWfM3VTGmXAVtKvGsvkilaFPxsr3I1b43jnamfyyGT0WGqqRP2q66TzmUW0NxnTl1b5gi-977hjgL2d8IWoMZ7ckUj917EZZZiHtzLgI4GjCS6dFlQs3T5SwwhBYBeaJC7htMo1zqXMraRrtJZsFNWDhYSxokcT28MCj0Nk7oTcZ4qq2R68qz6thIQwDlNosCj5DHerGnjHYtIoIkUVI9Cj7g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"pruebin4\",\r\n    \"password\": \"prueba4\",\r\n    \"fullName\": \"Carlos Diego Octavio Martinez Macias\",\r\n    \"email\": \"pruebin4@prueba.com\",\r\n    \"avatar\": \"xd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/kokonut/v1/api/auth/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"kokonut",
+						"v1",
+						"api",
+						"auth",
+						"update"
+					]
+				},
+				"description": "editar Usuario"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar Usuario",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDQ2MDE1MDQsInVzZXJfbmFtZSI6InBydWViYWNkb2RAZ21haWwuY29tIiwianRpIjoiY2Q2MzVmYjUtZDViNS00YjcxLWFjMTItZTIxZjQwYTNmOTRjIiwiY2xpZW50X2lkIjoia29rb251dEFwcCIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdfQ.EnfDMiGGHrBbNdollTMOhZFBy8fE6RMQOW1Qo4_KVs9xcWjAcbkS5BkfAosNvowAmgfpdpgsR-t3Os1uzUuTmyDnvORb3juvV5ZbcMwA13QK2iO8cW8LJAlnduL0HQRPnLw4HUFafxP8HD5F4MZSUfPiCJ9RD4VgX0FmnHjAIXcewUEafpPS0WlzvNOZcJzKRh5m4sRsSHPq5tAaISe9FZSpKXpCVMSV0vCbpC57-WlOWSxzl729kJPPbgm23OmsGhjQiGHLuM2KcyZUJnFZjuQ7zRad5Aqh9QdbGghCcs_YDp7Um4wKtseMwsBDPp6njw3M-DUhs9kly_3PvDLNBQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/kokonut/v1/api/auth/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"kokonut",
+						"v1",
+						"api",
+						"auth",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Subir Foto",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDQ1ODM3NjcsInVzZXJfbmFtZSI6ImNkb2RpZWdvbXR6QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJqdGkiOiIzYjhkMTdlMy0wYjQxLTQyZmYtODQ1ZC02ODM3NzM2YmNiYzMiLCJjbGllbnRfaWQiOiJrb2tvbnV0QXBwIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.l-3inmsYnOr-cU-tURxETMH8VkEWEIGYXLodCM6FB_gvVaIbBfm3TzC5Cme5DkeQWBGlmqXvL4_STiP92wKfgnjq7iPpsTpLAQfuo9fLwKWW7FFXyrXaeGKNJhVcgHFdrg2pU7mfM5mYc7BOOw9bIHpbWPx1VR-JzKlixJ0TNIO0Qa3Ly2XfSsYfO6GoQNXB92pxvRHzHRwCK5SkyNN2Usr2zuaMmJroPx5Noq7zbpYKqv4yhTQnZW43R11fXl4J3k1QqyhSfpE9w6IgHdrYA_ghnXQfS7ML2leTPTk8JtcqXiH7VdEGb0kUGQd7PNuIvhmaAIyePu-GJ6rYfQhm0A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "foto",
+							"type": "file",
+							"src": "/D:/Diego/Imagenes/prueba02.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/kokonut/v1/fotos/subir",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"kokonut",
+						"v1",
+						"fotos",
+						"subir"
+					]
+				},
+				"description": "Sube una foto y la asocia al usuario loggeado"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Fotos del Usuario",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDQ1ODgzMDEsInVzZXJfbmFtZSI6ImNkb2RpZWdvbXR6QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJqdGkiOiJhMzAxN2VkYy04MjU1LTQzZmYtYTdiYy00YWM4ODEwZjRjYTQiLCJjbGllbnRfaWQiOiJrb2tvbnV0QXBwIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.sySHVeV8bbOyApvypJl5fi6ui5KzqDr_qHTqRJJu6wCzTxCEVMYfi1F6VbFtJ8zTQfMLBy2USa0fUhDHsSjL0ZlUSoPtUCoS946VApiIbBaZ4d72XwWQvt4zytj6IyahS80VNhkfFk-XrI9qIQjWu2X7vsnhQa0drfz_l-89gytgkXqGkhYAIht5PBsyvxaZaP62ZTN0D-kBEQp2Faxsm9cFlAIYKkrVPib8wE4fM8sY71neiv5MJzXBLsUaI_wyap2ZE7rNs4IYUXIm9cHvuwGd9pCHksCYFRVr7RFPxl3eJF95WOmXEGxZH65Z7YOdZwIKEQUhSOtlJNRSveLHDw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/kokonut/v1/fotos/byEmail/0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"kokonut",
+						"v1",
+						"fotos",
+						"byEmail",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Toda las Fotos Mod",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDQ1NzU0OTMsInVzZXJfbmFtZSI6ImNkb2RpZWdvbXR6QGdtYWlsLmNvbSIsImp0aSI6IjQ3NDQ5OGYwLTNhYmYtNGVjYi1iYzk5LWVhMWJlM2U0NGFmMiIsImNsaWVudF9pZCI6Imtva29udXRBcHAiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.h9BSF59hy7M-4YNfqEpHGdzAgFMQk4m5T8uED3ldF7irDBbh_mFHcNRjvtPFzAhHsALRFrnjaylYZcuGJeUrhhL8qHtS2OnV-REwcD3IhodbrNOeHLbSz_EvTjzg34MKC5RBkd1tQ1VJcp_HlO1gl6p3iRqYrP8ot7pBbDETj6HTsqdlbEYZ-QtmixtGsUKolctXT3SHnUVV5JY0Lpo0AX3GmpkkH4iWqGwIkjlFmfXptj3beS9I-sHMNjNljTS7PSAsiVDWKf002Hvs7qwO4OaG3a3PX2lbQdbVicuV26h9r2Fki6o2v5oG4PWAsM6NoVmIvFx0wBIqLFF8DT8HLg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/kokonut/v1/fotos/all/0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"kokonut",
+						"v1",
+						"fotos",
+						"all",
+						"0"
+					]
+				},
+				"description": "Seleccionar Todas las fotos"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar Foto Usuario",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDQ1ODgzMDEsInVzZXJfbmFtZSI6ImNkb2RpZWdvbXR6QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJqdGkiOiJhMzAxN2VkYy04MjU1LTQzZmYtYTdiYy00YWM4ODEwZjRjYTQiLCJjbGllbnRfaWQiOiJrb2tvbnV0QXBwIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.sySHVeV8bbOyApvypJl5fi6ui5KzqDr_qHTqRJJu6wCzTxCEVMYfi1F6VbFtJ8zTQfMLBy2USa0fUhDHsSjL0ZlUSoPtUCoS946VApiIbBaZ4d72XwWQvt4zytj6IyahS80VNhkfFk-XrI9qIQjWu2X7vsnhQa0drfz_l-89gytgkXqGkhYAIht5PBsyvxaZaP62ZTN0D-kBEQp2Faxsm9cFlAIYKkrVPib8wE4fM8sY71neiv5MJzXBLsUaI_wyap2ZE7rNs4IYUXIm9cHvuwGd9pCHksCYFRVr7RFPxl3eJF95WOmXEGxZH65Z7YOdZwIKEQUhSOtlJNRSveLHDw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/kokonut/v1/fotos/borrar/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"kokonut",
+						"v1",
+						"fotos",
+						"borrar",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar Foto Mod",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDQ1ODgzMDEsInVzZXJfbmFtZSI6ImNkb2RpZWdvbXR6QGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJqdGkiOiJhMzAxN2VkYy04MjU1LTQzZmYtYTdiYy00YWM4ODEwZjRjYTQiLCJjbGllbnRfaWQiOiJrb2tvbnV0QXBwIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.sySHVeV8bbOyApvypJl5fi6ui5KzqDr_qHTqRJJu6wCzTxCEVMYfi1F6VbFtJ8zTQfMLBy2USa0fUhDHsSjL0ZlUSoPtUCoS946VApiIbBaZ4d72XwWQvt4zytj6IyahS80VNhkfFk-XrI9qIQjWu2X7vsnhQa0drfz_l-89gytgkXqGkhYAIht5PBsyvxaZaP62ZTN0D-kBEQp2Faxsm9cFlAIYKkrVPib8wE4fM8sY71neiv5MJzXBLsUaI_wyap2ZE7rNs4IYUXIm9cHvuwGd9pCHksCYFRVr7RFPxl3eJF95WOmXEGxZH65Z7YOdZwIKEQUhSOtlJNRSveLHDw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/kokonut/v1/fotos/borrarMod/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"kokonut",
+						"v1",
+						"fotos",
+						"borrarMod",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
