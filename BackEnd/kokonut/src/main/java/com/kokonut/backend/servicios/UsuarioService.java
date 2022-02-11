@@ -39,14 +39,11 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	
 	@Autowired
 	private EmailService emailService;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
-		// Permite a la gente ingresar con Correo
+		// Permite ingresar con Correo
         Usuario user = userRepository.findByEmail(userEmail)
         		.orElseThrow(() -> 
         			new UsernameNotFoundException("Usuario no encontrado con correo : " + userEmail));
@@ -62,7 +59,6 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	public UsuarioPayload create(UsuarioPayload user) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String code = UUID.randomUUID().toString().substring(0, 16).replace('-', 't');
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.createUserSP(user.getAvatar(), user.getEmail(), false, user.getPassword(), user.getUsername(), code, user.getFullName());
 		map.put("url", "http://localhost:8080/kokonut/v1/api/auth/confirm?code=" + code);
 		try {
@@ -82,7 +78,6 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	public UsuarioPayload createMod(@Valid UsuarioPayload user) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String code = UUID.randomUUID().toString().substring(0, 16).replace('-', 't');
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.createModSP(user.getAvatar(), user.getEmail(), false, user.getPassword(), user.getUsername(), code, user.getFullName());
 		map.put("url", "http://localhost:8080/kokonut/v1/api/auth/confirm?code=" + code);
 		try {
@@ -96,7 +91,6 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 
 	@Override
 	public UsuarioPayload actualizarUsuario(UsuarioPayload newUsr, String OldUsr) {
-		newUsr.setPassword(passwordEncoder.encode(newUsr.getPassword()));
 		userRepository.updateUser(newUsr.getAvatar(), newUsr.getEmail(), newUsr.getPassword(), newUsr.getUsername(), newUsr.getFullName(), OldUsr);
 		return newUsr;
 	}
@@ -106,92 +100,5 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 		userRepository.deleteUser(email);
 		return "Usuario Borrado Exitosamente!";
 	}
-
-	/*@Override
-	@Transactional(value="seguridadTransactionManager", readOnly = true)
-	public Usuario findByUsername(String username) {
-		return userRepository.findByUsername(username).orElse(null);
-	}
-
-	@Override
-	@Transactional(value="seguridadTransactionManager", readOnly = true)
-	public Usuario findById(Long id) {
-		return userRepository.findById(id)
-			.orElseThrow(() -> 
-                new UsernameNotFoundException("Usuario no encontrado con e : " + id)
-		);
-	}
-
-	@Override
-	@Transactional(value="seguridadTransactionManager", readOnly = false)
-	public Usuario save(Usuario user) {
-		return userRepository.save(user);
-	}
-
-	@Override
-	@Transactional(value="seguridadTransactionManager", readOnly = true)
-	public List<Usuario> getAll() {
-		return userRepository.findAll();
-	}
-
-	@Transactional(value="seguridadTransactionManager", readOnly = false)
-	public Usuario create(@Valid Usario user) {
-		if(userRepository.existsByUsername(user.getUsername())) {
-            return null;
-        }
-
-        if(userRepository.existsByEmail(user.getEmail())) {
-            return null;
-        }
-
-        // Creando cuenta de Usuario
-        
-        com.polygon.seguridad.model.User u = new com.polygon.seguridad.model.User(user.getName(),
-        		user.getUsername(), user.getEmail(), user.getPassword(), user.getEnabled(),
-        		user.getFoto(), user.getLastName());
-        u.setCreatedAt(Instant.now());
-        u.setUpdatedAt(Instant.now());
-        user = u;
-
-        //user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        if(user.getPerfil_id() != null) {
-        	user.setPerfil_id(perfilRepository.findById(user.getPerfil_id().getId()).orElse(null));
-        }
-        if(user.getPerfil_id() == null) {
-	        Perfil p = perfilRepository.findByName("Default")
-	        		.orElseThrow(() -> new AppException("Perfil de Usuario no establecido."));
-	        user.setPerfil_id(p);
-        }
-        
-
-        return userRepository.save(user);
-
-	}
-
-	public Usuario update(com.polygon.seguridad.model.User user) {
-		//user.setPassword(passwordEncoder.encode(user.getPassword()));
-		com.polygon.seguridad.model.User u = userRepository.findById(user.getId()).orElseThrow(()->
-				new ResourceNotFoundException("usuario", "id", user.getId()));
-		u.setName(user.getName());
-		u.setUsername(user.getUsername());
-		u.setEmail(user.getEmail());
-		u.setEnabled(user.getEnabled());
-		u.setLastName(user.getLastName());
-		u.setUpdatedAt(Instant.now());
-		u.setPerfil_id(perfilRepository.findById(user.getPerfil_id().getId()).orElse(null));
-		userRepository.save(u);
-		System.out.println("aqui");
-		return u;
-	}
-
-	public boolean delete(Long id) {
-		try {
-			userRepository.deleteById(id);
-			return true;
-		} catch(Exception e) {
-			return false;
-		}
-	}*/
 	
 }

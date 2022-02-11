@@ -28,13 +28,18 @@ public class AuthController {
 	@Autowired
 	private UsuarioService userService;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@PostMapping("/registrarse")
 	public UsuarioPayload registerUser(@Valid @RequestBody UsuarioPayload user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return userService.create(user);
 	}
 	
 	@PostMapping("/registrarMod")
 	public UsuarioPayload registerMod(@Valid @RequestBody UsuarioPayload user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return userService.createMod(user);
 	}
 	
@@ -49,6 +54,7 @@ public class AuthController {
 	@PutMapping("/update")
 	@ResponseBody
 	public UsuarioPayload actualizarUsuario(@Valid @RequestBody UsuarioPayload newUser, Principal principal) {
+		newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 		return userService.actualizarUsuario(newUser, principal.getName());
 	}
 	
