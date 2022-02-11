@@ -29,4 +29,7 @@ public interface FotoRepository extends JpaRepository<Foto, Long> {
 	@Procedure("DeleteFotoUserSP")
 	void deleteFotoUser(@Param("idFoto") Long id, @Param("email") String email);
 	
+	@Query(value = "EXEC SelectInfoFotoSP @idFoto = :idFoto", nativeQuery = true)
+	List<Object[]> findInfoById(@Param("idFoto") Long id);
+	
 }

@@ -1,6 +1,5 @@
 package com.kokonut.backend.servicios;
 
-import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,14 +16,12 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kokonut.backend.exception.AppException;
 import com.kokonut.backend.modelos.Usuario;
 import com.kokonut.backend.payload.UsuarioPayload;
-import com.kokonut.backend.repositorios.RolRepository;
 import com.kokonut.backend.repositorios.UsuarioRepository;
 import com.kokonut.backend.servicios.dao.IUsuarioService;
 
@@ -33,9 +30,6 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 
 	@Autowired
     private UsuarioRepository userRepository;
-	
-	@Autowired
-	private RolRepository roleRepository;
 	
 	@Autowired
 	private EmailService emailService;

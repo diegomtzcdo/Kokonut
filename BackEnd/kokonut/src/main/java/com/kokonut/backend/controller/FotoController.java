@@ -1,9 +1,15 @@
 package com.kokonut.backend.controller;
 
+import java.net.MalformedURLException;
 import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -60,6 +66,20 @@ public class FotoController {
 	@ResponseBody
 	public String deleteFotoMod(@PathVariable("id") Long id) {
 		return fotoService.borrarFotoByIdMod(id);
+	}
+	
+	@GetMapping("/uploads/img/{nombreFoto:.+}")
+	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto){
+		Resource recurso = null;
+		try {
+			recurso = fotoService.cargar(nombreFoto);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			throw new ResourceNotFoundException("Algo salio mal al cargar el nombr de la foto");
+		}
+		HttpHeaders cabecera = new HttpHeaders();
+		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"");
+		return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
 	}
 
 }
