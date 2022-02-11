@@ -25,6 +25,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kokonut.backend.modelos.Foto;
 import com.kokonut.backend.servicios.FotoService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/fotos")
 @CrossOrigin(origins="*")
@@ -35,6 +37,7 @@ public class FotoController {
 	
 	@GetMapping("/all/{page}")
 	@Secured("ROLE_MOD")
+	@ApiOperation(value = "Todas las fotos registradas", notes = "regresa todas las fotos registradas, se necesita el rol de mod"  )
 	public List<Foto> getAll(@PathVariable("page") Integer page) {
 		return fotoService.getAll(page);
 	}
@@ -42,6 +45,7 @@ public class FotoController {
 	@GetMapping("/byEmail/{page}")
 	@Secured("ROLE_USER")
 	@ResponseBody
+	@ApiOperation(value = "Fotos asignadas al Usuario", notes = "Regresa solo las fotos asociadas al usuario registrado, solo la puede usar un usuario normmal" )
 	public List<Foto> getFotosByUser(@PathVariable("page") Integer page, Principal principal) {
 		return fotoService.getFotoUser(page, principal.getName());
 	}
@@ -49,6 +53,7 @@ public class FotoController {
 	@PostMapping("/subir")
 	@Secured("ROLE_USER")
 	@ResponseBody
+	@ApiOperation(value = "Permite cargar una foto y la asocia al usuario", notes = "Solo puede usarla un usuario normal" )
 	public Foto subirFoto(@RequestParam("foto") MultipartFile foto, Principal principal) {
 		return fotoService.subirFoto(foto, principal.getName());
 		
@@ -57,6 +62,7 @@ public class FotoController {
 	@DeleteMapping("/borrar/{id}")
 	@Secured("ROLE_USER")
 	@ResponseBody
+	@ApiOperation(value = "Borra la foto con el id seleccionado", notes = "Solo se puede usar con un usuario normal" )
 	public String deleteFotoUser(@PathVariable("id") Long id, Principal principal) {
 		return fotoService.borrarFotoById(id, principal.getName());
 	}
@@ -64,11 +70,13 @@ public class FotoController {
 	@DeleteMapping("/borrarMod/{id}")
 	@Secured("ROLE_MOD")
 	@ResponseBody
+	@ApiOperation(value = "Borra cualquier foto deacuerdo al id enviado", notes = "Se necesita el rol de moderador" )
 	public String deleteFotoMod(@PathVariable("id") Long id) {
 		return fotoService.borrarFotoByIdMod(id);
 	}
 	
 	@GetMapping("/uploads/img/{nombreFoto:.+}")
+	@ApiOperation(value = "Foto a partir de su nombre", notes = "Regresa la foto segun el nombre con el que se creo acceso publico" )
 	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto){
 		Resource recurso = null;
 		try {
