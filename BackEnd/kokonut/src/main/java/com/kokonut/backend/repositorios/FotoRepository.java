@@ -23,4 +23,10 @@ public interface FotoRepository extends JpaRepository<Foto, Long> {
 	void createFoto(@Param("name") String name, @Param("latitude") Double latitude, @Param("longitude") Double longitude,
 			@Param("enabled") Boolean enabled, @Param("email") String email);
 
+	@Procedure("DeleteFotoMODSP")
+	void deleteFotoMod(@Param("idFoto") Long id);
+	
+	@Procedure("DeleteFotoUserSP")
+	void deleteFotoUser(@Param("idFoto") Long id, @Param("email") String email);
+	
 }

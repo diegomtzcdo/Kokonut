@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,10 +33,11 @@ public class FotoController {
 		return fotoService.getAll(page);
 	}
 	
-	@GetMapping("/byEmail/{email}/{page}")
+	@GetMapping("/byEmail/{page}")
 	@Secured("ROLE_USER")
-	public List<Foto> getFotosByUser(@PathVariable("page") Integer page, @PathVariable("user") String user) {
-		return fotoService.getFotoUser(page, user);
+	@ResponseBody
+	public List<Foto> getFotosByUser(@PathVariable("page") Integer page, Principal principal) {
+		return fotoService.getFotoUser(page, principal.getName());
 	}
 	
 	@PostMapping("/subir")
@@ -44,6 +46,20 @@ public class FotoController {
 	public Foto subirFoto(@RequestParam("foto") MultipartFile foto, Principal principal) {
 		return fotoService.subirFoto(foto, principal.getName());
 		
+	}
+	
+	@DeleteMapping("/borrar/{id}")
+	@Secured("ROLE_USER")
+	@ResponseBody
+	public String deleteFotoUser(@PathVariable("id") Long id, Principal principal) {
+		return fotoService.borrarFotoById(id, principal.getName());
+	}
+	
+	@DeleteMapping("/borrarMod/{id}")
+	@Secured("ROLE_MOD")
+	@ResponseBody
+	public String deleteFotoMod(@PathVariable("id") Long id) {
+		return fotoService.borrarFotoByIdMod(id);
 	}
 
 }

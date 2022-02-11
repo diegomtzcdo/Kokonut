@@ -16,25 +16,29 @@ import com.kokonut.backend.exception.AppException;
 import com.kokonut.backend.exception.BadRequestException;
 import com.kokonut.backend.modelos.Foto;
 import com.kokonut.backend.repositorios.FotoRepository;
+import com.kokonut.backend.servicios.dao.IFotoService;
 
 import javaxt.io.Image;
 
 @Service
-public class FotoService {
+public class FotoService implements IFotoService{
 	
 	@Autowired
 	private FotoRepository fotoRepository;
 	
+	@Override
 	public List<Foto> getAll(Integer page) {
 		Integer size = 10;
 		return fotoRepository.selectAllFotos(page, size);
 	}
 	
+	@Override
 	public List<Foto> getFotoUser(Integer page, String email) {
 		Integer size = 10;
 		return fotoRepository.selectFotosByEmail(page, size, email);
 	}
 
+	@Override
 	public Foto subirFoto(MultipartFile foto, String email) {
 		if(!foto.isEmpty()) {
 			String archivo = "F" + UUID.randomUUID().toString().substring(0, 8).toUpperCase() + "-" + foto.getOriginalFilename();
@@ -58,6 +62,18 @@ public class FotoService {
 			throw new BadRequestException("La foto no se encuentra bien subida");
 		}
 		
+	}
+
+	@Override
+	public String borrarFotoById(Long id, String email) {
+		fotoRepository.deleteFotoUser(id, email);
+		return "Foto Borrada!";
+	}
+
+	@Override
+	public String borrarFotoByIdMod(Long id) {
+		fotoRepository.deleteFotoMod(id);
+		return "Foto Borrada!";
 	}
 
 }
