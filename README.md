@@ -1,6 +1,6 @@
-# Título del Proyecto
+# Kokonut Prueba Técnica
 
-_Acá va un párrafo que describa lo que es el proyecto_
+_Prueba técnica_
 
 ## Comenzando 🚀
 
@@ -39,6 +39,8 @@ maven clean
 maven install
 ```
 
+## Despliegue 📦
+
 _Ejecutar el Jar_
 
 ```
@@ -46,7 +48,7 @@ cd kokonut/target
 java -jar kokonut-0.0.1-SNAPSHOT.jar
 ```
 
-_Esto levantara un servidor tomcat y creara la tablas de la base datos si se conecta correctamentne_
+_Esto levantara un servidor tomcat y creara la tablas de la base datos si se conecta correctamente_
 
 _Solamente falta probar en la carpeta Postman estan los servicios_
 
@@ -55,10 +57,6 @@ _O se puede acceder a la vista de swagger_
 ```
 http://localhost:8080/kokonut/v1/swagger-ui.html
 ```
-
-## Despliegue 📦
-
-_Agrega notas adicionales sobre como hacer deploy_
 
 ## Construido con 🛠️
 
